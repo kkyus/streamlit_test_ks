@@ -14,8 +14,9 @@ def get_historical_data(start_date, end_date):
         'market': ['KOSPI'] * len(kospi_tickers) + ['KOSDAQ'] * len(kosdaq_tickers)
     })
 
-    tickers['ticker'] = tickers['ticker'].astype(str)
-    
+    tickers['ticker'] = tickers['ticker'].astype(str)  # Ensure tickers are treated as strings
+    tickers['name'] = tickers['ticker'].apply(stock.get_market_ticker_name)
+
     start_date = start_date.strftime('%Y%m%d')
     end_date = end_date.strftime('%Y%m%d')
 
@@ -23,14 +24,15 @@ def get_historical_data(start_date, end_date):
     progress_bar = st.progress(0)
     progress_text = st.empty()
 
-    for idx, row in enumerate(tickers.iterrows()):
+    for idx, row in enumerate(tqdm(tickers.iterrows(), total=total_tickers)):
         ticker = row[1]['ticker']
         market = row[1]['market']
+        name = row[1]['name']
         
         df = stock.get_market_ohlcv_by_date(start_date, end_date, ticker)
         df['ticker'] = ticker
-        df['ticker'] = df['ticker'].astype(str)
         df['market'] = market
+        df['name'] = name
         dataframes.append(df)
         
         # Update the progress bar
