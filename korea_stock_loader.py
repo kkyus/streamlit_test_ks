@@ -4,8 +4,8 @@ import streamlit as st
 
 
 def get_historical_data(start_date, end_date):
-    kospi_tickers = stock.get_market_ticker_list(market="KOSPI")[:5]
-    kosdaq_tickers = stock.get_market_ticker_list(market="KOSDAQ")[:5]
+    kospi_tickers = stock.get_market_ticker_list(market="KOSPI")
+    kosdaq_tickers = stock.get_market_ticker_list(market="KOSDAQ")
 
     dataframes = []
     tickers = pd.DataFrame({
