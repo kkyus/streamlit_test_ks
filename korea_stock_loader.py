@@ -21,7 +21,7 @@ def get_historical_data(start_date, end_date):
     progress_bar = st.progress(0)
     progress_text = st.empty()
 
-    for idx, row in enumerate(tickers.iterrows(), total=total_tickers):
+    for idx, row in enumerate(tickers.iterrows()):
         ticker = row[1]['ticker']
         market = row[1]['market']
         
