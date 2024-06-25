@@ -44,7 +44,7 @@ def get_historical_data(start_date, end_date):
 
     # Ensure ticker column remains as string
     whole_dataframe['ticker'] = whole_dataframe['ticker'].astype(str)
-    whole_dataframe['ticker'] = whole_dataframe['ticker'].apply('="{}"'.format)
+
 
     return whole_dataframe
 
@@ -62,7 +62,7 @@ def show():
             st.dataframe(st.session_state.historical_data.head())
 
     if st.session_state.historical_data is not None:
-        dataframe = st.session_state.historical_data.to_csv(index = False, encoding='utf-8-sig').encode('utf-8-sig')
+        dataframe = st.session_state.historical_data.to_csv(index = False, encoding='utf-8-sig', dtype=str).encode('utf-8-sig')
         st.download_button(
             label="Download data as CSV",
             data=dataframe,
