@@ -55,7 +55,7 @@ def show():
             st.dataframe(st.session_state.historical_data.head())
 
     if st.session_state.historical_data is not None:
-        dataframe = st.session_state.historical_data.to_csv(index = Fales, encoding='utf-8-sig').encode('utf-8-sig')
+        dataframe = st.session_state.historical_data.to_csv(index = False, encoding='utf-8-sig').encode('utf-8-sig')
         st.download_button(
             label="Download data as CSV",
             data=dataframe,
