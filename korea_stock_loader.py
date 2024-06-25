@@ -27,7 +27,7 @@ def get_historical_data(start_date, end_date):
         market = row[1]['market']
         
         df = stock.get_market_ohlcv_by_date(start_date, end_date, ticker)
-        df['ticker'] = ticker
+        df['ticker'] = 'a_' + ticker
         df['market'] = market
 
         dataframes.append(df)
