@@ -21,14 +21,14 @@ def get_historical_data(start_date, end_date):
     progress_text = st.empty()
 
     for idx, row in enumerate(tickers.iterrows()):
-        name = row[1]['name']
+
         ticker = row[1]['ticker']
         market = row[1]['market']
         
         df = stock.get_market_ohlcv_by_date(start_date, end_date, ticker)
         df['ticker'] = ticker
         df['market'] = market
-        df['name'] = name
+
         dataframes.append(df)
         
         # Update the progress bar
