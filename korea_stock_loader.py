@@ -1,6 +1,11 @@
+import pandas as pd
+from pykrx import stock
+import streamlit as st 
+
+
 def get_historical_data(start_date, end_date):
-    kospi_tickers = stock.get_market_ticker_list(market="KOSPI")
-    kosdaq_tickers = stock.get_market_ticker_list(market="KOSDAQ")
+    kospi_tickers = stock.get_market_ticker_list(market="KOSPI")[:5]
+    kosdaq_tickers = stock.get_market_ticker_list(market="KOSDAQ")[:5]
 
     dataframes = []
     tickers = pd.DataFrame({
@@ -16,12 +21,14 @@ def get_historical_data(start_date, end_date):
     progress_text = st.empty()
 
     for idx, row in enumerate(tickers.iterrows()):
+        name = row[1]['name']
         ticker = row[1]['ticker']
         market = row[1]['market']
         
         df = stock.get_market_ohlcv_by_date(start_date, end_date, ticker)
         df['ticker'] = ticker
         df['market'] = market
+        df['name'] = name
         dataframes.append(df)
         
         # Update the progress bar
@@ -49,7 +56,7 @@ def show():
             st.dataframe(st.session_state.historical_data.head())
 
     if st.session_state.historical_data is not None:
-        dataframe = st.session_state.historical_data.to_csv(index=False, encoding='utf-8-sig').encode('utf-8-sig')
+        dataframe = st.session_state.historical_data.to_csv(index = Fales, encoding='utf-8-sig').encode('utf-8-sig')
         st.download_button(
             label="Download data as CSV",
             data=dataframe,
