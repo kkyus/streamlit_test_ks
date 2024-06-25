@@ -40,9 +40,11 @@ def get_historical_data(start_date, end_date):
     whole_dataframe = pd.concat(dataframes)
     whole_dataframe.reset_index(inplace=True)
     whole_dataframe['날짜'] = whole_dataframe['날짜'].dt.strftime('%Y-%m-%d')
+    
 
     # Ensure ticker column remains as string
     whole_dataframe['ticker'] = whole_dataframe['ticker'].astype(str)
+    whole_dataframe['ticker'] = whole_dataframe['ticker'].apply('="{}"'.format)
 
     return whole_dataframe
 
