@@ -13,6 +13,8 @@ def get_historical_data(start_date, end_date):
         'market': ['KOSPI'] * len(kospi_tickers) + ['KOSDAQ'] * len(kosdaq_tickers)
     })
 
+    tickers['ticker'] = tickers['ticker'].astype(str)  # Ensure ticker is a string
+
     start_date = start_date.strftime('%Y%m%d')
     end_date = end_date.strftime('%Y%m%d')
 
@@ -21,7 +23,6 @@ def get_historical_data(start_date, end_date):
     progress_text = st.empty()
 
     for idx, row in enumerate(tickers.iterrows()):
-
         ticker = row[1]['ticker']
         market = row[1]['market']
         
@@ -39,6 +40,9 @@ def get_historical_data(start_date, end_date):
     whole_dataframe = pd.concat(dataframes)
     whole_dataframe.reset_index(inplace=True)
     whole_dataframe['날짜'] = whole_dataframe['날짜'].dt.strftime('%Y-%m-%d')
+
+    # Ensure ticker column remains as string
+    whole_dataframe['ticker'] = whole_dataframe['ticker'].astype(str)
 
     return whole_dataframe
 
