@@ -14,6 +14,8 @@ def get_historical_data(start_date, end_date):
         'market': ['KOSPI'] * len(kospi_tickers) + ['KOSDAQ'] * len(kosdaq_tickers)
     })
 
+    tickers['ticker'] = tickers['ticker'].astype(str)
+    
     start_date = start_date.strftime('%Y%m%d')
     end_date = end_date.strftime('%Y%m%d')
 
@@ -27,6 +29,7 @@ def get_historical_data(start_date, end_date):
         
         df = stock.get_market_ohlcv_by_date(start_date, end_date, ticker)
         df['ticker'] = ticker
+        df['ticker'] = df['ticker'].astype(str)
         df['market'] = market
         dataframes.append(df)
         
